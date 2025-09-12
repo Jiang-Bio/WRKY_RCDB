@@ -25,12 +25,6 @@ pwmlist_alig <- DNAmotifAlignment(
   revcomp = rep(FALSE, length(pwmlist))
 )
 
-# Plot motif logos
-TF_logo.2(
-  convert_motifs(pwmlist_alig, class = "TFBSTools-PWMatrix"),
-  outfile = "2024_WRKY/8_motif_net/plot/motiflogo.pdf"
-)
-
 # Trim PWM matrices (remove flanking columns)
 for (i in seq_along(pwmlist_alig)) {
   pwmlist_alig[[i]]@mat <- pwmlist_alig[[i]]@mat[, -c(1:2, 16:17)]
