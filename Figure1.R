@@ -104,13 +104,8 @@ p_load(BiocIO,tools,hbmcbioR,JASPAR2020,readxl,ggtext,htmlwidgets,bootnet,tidygr
          )
        
        # Save to PDF
-       ggsave(
-         filename = "2024_WRKY/fig_data.summary/subfamily.pdf",
-         plot = p,
-         width = 10, height = 8
-       )
-       
-       message("Plot saved to 2024_WRKY/fig_data.summary/subfamily.pdf")
+       ggsave(filename = outfile, plot = p,width = 10, height = 8)
+
 
 
 # -----------------------------------------------------------
