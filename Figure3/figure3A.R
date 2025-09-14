@@ -3,7 +3,6 @@ pwmlist <- read_jaspar("~/ALL_mono_P_S_T.pwm")
   pwmlist_alig <- DNAmotifAlignment(threshold = 0,pfms = pwmlist %>% convert_motifs(class = "motifStack-pfm"),
                                     revcomp= rep(FALSE, length(pwmlist)))# %>% convert_motifs("TFBSTools-PWMatrix") %>% TF_logo.2(outfile = "2.txt.pdf")
 
-  TF_logo.2(convert_motifs(pwmlist_alig,class = "TFBSTools-PWMatrix"),outfile = "2024_WRKY/8_motif_net/plot/motiflogo.pdf")
   for (i in 1:length(pwmlist_alig)) {
     pwmlist_alig[[i]]@mat <- pwmlist_alig[[i]]@mat[,-c(1:2,16:17)]
   }
@@ -23,8 +22,8 @@ pwmlist <- read_jaspar("~/ALL_mono_P_S_T.pwm")
   }
   colnames(p) <- names(c);rownames(c) <- NULL
   p <- cor(p,method = "spearman")
-  # p <- p[-1,]
-  a <- dist(x = p,method = "maximum")#euclidean
+
+  a <- dist(x = p,method = "maximum")
   hc <- do.call("hclust", list(d = a))
   library(ggtree)
   phylog <- ade4::hclust2phylog(hc,add.tools = TRUE)
@@ -89,7 +88,7 @@ pwmlist <- read_jaspar("~/ALL_mono_P_S_T.pwm")
                    class4,"+",class5,"+",class6,"+",class7,"+",class8,"+",class9,"+",class10,"+",class11)#,"+",class12
   plot <-  eval(parse(text = plot_text))
   
-  # p <- p+new_scale_fill()
+
   p1 <- plot +geom_fruit(
     data=dt,
     geom=geom_star,
@@ -97,7 +96,7 @@ pwmlist <- read_jaspar("~/ALL_mono_P_S_T.pwm")
     starstroke=0,
     starshape = 13,
     offset =0.24,
-    pwidth=0.30#轨道之间距离   grid.params=list(linetype=3)#轨道线
+    pwidth=0.30#轨道之间距离
   )+
     scale_size_continuous(range=c(0, 4),
                           limits=c(min(dt$size), max(dt$size)),breaks=c(1, 2, 3))+
@@ -108,4 +107,4 @@ pwmlist <- read_jaspar("~/ALL_mono_P_S_T.pwm")
     theme(legend.title = element_text(size = 20),   
           legend.text = element_text(size = 20),    
           legend.key.size = unit(10, "lines")   )
-  ggsave(filename = "2024_WRKY/8_motif_net/plot/test.pdf",plot = p1,width = 20,height = 20)
+
