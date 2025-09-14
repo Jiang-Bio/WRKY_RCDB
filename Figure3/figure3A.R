@@ -108,3 +108,38 @@ pwmlist <- read_jaspar("~/ALL_mono_P_S_T.pwm")
           legend.text = element_text(size = 20),    
           legend.key.size = unit(10, "lines")   )
 
+
+
+
+
+#生成11类代表性motif矩阵
+    class1 <- tree[tree==1] %>% names()
+    class2 <- tree[tree==2] %>% names()
+    class3 <- tree[tree==3] %>% names()
+    class4 <- tree[tree==4] %>% names()
+    class5 <- tree[tree==5] %>% names()
+    class6 <- tree[tree==6] %>% names()
+    class7 <- tree[tree==7] %>% names()
+    class8 <- tree[tree==8] %>% names()
+    class9 <- tree[tree==9] %>% names()
+    class10 <- tree[tree==10] %>% names() 
+    class11 <- tree[tree==11] %>% names()
+  
+  class <- list(class1,class3,class4,class2,class7,class6,class11,class10,class9,class8,class5)
+  
+  pwm.l <- lapply(1:length(class), function(i){
+    c1 <- c[class[[i]]] %>% convert_motifs("universalmotif-universalmotif")
+    # c1 <- c1[which(sapply(c1, function(x){ (x@icscore )/ncol(x@motif)})>0.6)]
+    
+   for(x in 1:length(c1)){ if( 
+     ((c1[[x]]@icscore )/ncol(c1[[x]]@motif) ) >0.5 ){
+     c1[[x]]@motif <- c1[[x]]@motif *0.8
+    }else{ c1[[x]]@motif <- c1[[x]]@motif *0.2}  }
+
+    a3 <- paste0("c1[[",c(1:length(c1)),"]]@motif",collapse = "+") %>% parse(text = .) %>% eval()
+    a3 <- sweep(a3, 2, colSums(a3), FUN = "/") %>% as.matrix() %>% convert_motifs("universalmotif-universalmotif")
+    a3@name <- glue("class{i}")
+    a3
+  })
+    write_jaspar(motifs = pwm.l,file = "2024_WRKY/8_motif_net/class11_pwm.txt",overwrite = T)
+    
