@@ -10,21 +10,6 @@ p_load(BiocIO,tools,hbmcbioR,JASPAR2020,readxl,ggtext,htmlwidgets,bootnet,tidygr
        reshape2,magrittr,lubridate,forcats,stringr,dplyr,purrr,readr,tidyr,tibble,tidyverse,pacman,
        plotly,ggplot2,glue,ggthemes,grid,tools,stats,graphics
 )
-
-
-
-library(pacman)
-p_load(BiocIO,tools,hbmcbioR,JASPAR2020,readxl,ggtext,htmlwidgets,bootnet,tidygraph,ggraph,igraph,
-       motifStack,ggtreeExtra,ggnewscale,ggtree,ShortRead,GenomicAlignments,Rsamtools,BiocParallel,
-       DESeq2,enrichplot,DOSE,qpdf,Cairo,clusterProfiler,org.At.tair.db,entropy,BSgenome.Athaliana.TAIR.TAIR9,
-       GenomicFeatures,AnnotationDbi,karyoploteR,regioneR,RColorBrewer,
-       doParallel,parallel,iterators,foreach,ggpubr,gridExtra,openxlsx,DiffBind,SummarizedExperiment,
-       Biobase,MatrixGenerics,rtracklayer,fjComm,GenomicRanges,TFBSTools,universalmotif,motifmatchr,
-       Biostrings,GenomeInfoDb,XVector,IRanges,S4Vectors,stats4,BiocGenerics,ggseqlogo,matrixStats,
-       reshape2,magrittr,lubridate,forcats,stringr,dplyr,purrr,readr,tidyr,tibble,tidyverse,pacman,
-       plotly,ggplot2,glue,ggthemes,grid,tools,stats,graphics
-)
-
 # -----------------------------------------------------------
 #fig1A####
 # -----------------------------------------------------------
@@ -56,14 +41,11 @@ p_load(BiocIO,tools,hbmcbioR,JASPAR2020,readxl,ggtext,htmlwidgets,bootnet,tidygr
            data[i + offset, 2:5] <<- a[order(names(a))]
          }
        }
-       
-       
        fill_counts(df$SELEX, 0)
        fill_counts(df$Me.SELEX, 7)
        fill_counts(df$DAP, 14)
        fill_counts(df$ampDAP, 21)
        fill_counts(df$MethylampDAP, 28)
-       
        
        data$R <- rowSums(data[, 2:5])
        
@@ -72,11 +54,9 @@ p_load(BiocIO,tools,hbmcbioR,JASPAR2020,readxl,ggtext,htmlwidgets,bootnet,tidygr
            x = rep(seq(2, 14, 2), 5),
            y = as.numeric(as.character(gl(5, 7, labels = c(2, 4, 6, 8, 10))))
          )
-       
-       # Swap columns "2" and "3" (for visualization order)
+
        data[, c(3, 4)] <- data[, c(4, 3)]
-       
-       
+
        df1 <- data.frame(
          x = seq(2, 14, 2),
          y = 11.5,
