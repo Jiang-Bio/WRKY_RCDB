@@ -12,7 +12,7 @@
   }
   
   
-  
+  #计算motif在每个SELEX文库中的富集
   cl=makeCluster(30)
   registerDoParallel(cl)
   rich_in_101N <- foreach(i=seq(nrow(selex_files)))%dopar%{
@@ -73,8 +73,7 @@
     
   }
   
-  
-
+  #计算WRKY共识序列在每个SELEX文库中的富集
   
   {
     
