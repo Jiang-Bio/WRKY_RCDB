@@ -119,44 +119,32 @@ p_load(BiocIO,tools,hbmcbioR,JASPAR2020,readxl,ggtext,htmlwidgets,bootnet,tidygr
        library(rtracklayer)
        library(ChIPpeakAnno)
        library(eulerr)
-       
-       ## -------------------------------
-       ## 1. Public DAP
-       ## -------------------------------
-       peakfile <- list.files(
-         path = "2024_WRKY/5_CALLPEAK/Public_DAP_ampDAP/DAP/callpeak/",
-         pattern = "narrowPeak$"
-       ) %>% paste0("2024_WRKY/5_CALLPEAK/Public_DAP_ampDAP/DAP/callpeak/", .)
-       
-       g <- rtracklayer::import(peakfile[1])
-       for (i in 2:length(peakfile)) {
-         g2 <- rtracklayer::import(peakfile[i])
-         a <- findOverlaps(g, g2)
-         g2 <- g2[-(a@to %>% unique())]
-         g <- c(g, g2)
-       }
-       public_dap <- g[which(grepl(pattern = "Chr[0-9]+", g@seqnames))]
-       
-       ## This study DAP
-       peakfile_dap <- list.files(
-         "2024_WRKY/5_CALLPEAK/DAP_callpeak_minus_pixHalo/temp/",
-         "narrowPeak$"
-       ) %>% paste0("2024_WRKY/5_CALLPEAK/DAP_callpeak_minus_pixHalo/temp/", .)
-       
-       gg <- rtracklayer::import(peakfile_dap[1])
-       for (i in 2:length(peakfile_dap)) {
-         g2 <- rtracklayer::import(peakfile_dap[i])
-         g2 <- g2[which(grepl(pattern = "Chr[0-9]+", g2@seqnames))]
-         a <- findOverlaps(gg, g2)
-         g2 <- g2[-(a@to %>% unique())]
-         gg <- c(gg, g2)
-       }
-       gg <- gg[which(grepl(pattern = "Chr[0-9]+", gg@seqnames))]
-       
-       pixHalo <- readRDS("~/2024_WRKY/5_CALLPEAK/pixhalo.rds")
-       dap <- gg[-findOverlaps(gg, pixHalo)@from %>% unique()]
-       
-       ## Overlap analysis
+
+mergePeakFiles <- function(path, pattern = "narrowPeak$") {
+  peakfiles <- list.files(path = path, pattern = pattern, full.names = TRUE)
+  if (length(peakfiles) == 0) {
+    stop("No peak files found in the given path.")
+  }
+  g <- rtracklayer::import(peakfiles[1])
+  if (length(peakfiles) > 1) {
+    for (i in 2:length(peakfiles)) {
+      g2 <- rtracklayer::import(peakfiles[i])
+      a <- findOverlaps(g, g2)
+      g2 <- g2[-unique(a@to)]
+      g <- c(g, g2)
+    }
+  }
+  
+  return(g)
+}
+
+public_dap <- mergePeakFiles("2024_WRKY/5_CALLPEAK/Public_DAP_ampDAP/ampDAP/callpeak/")
+dap <- mergePeakFiles("2024_WRKY/5_CALLPEAK/DAP_callpeak_minus_pixHalo/temp/")
+public_ampdap <- mergePeakFiles("2024_WRKY/5_CALLPEAK/Public_DAP_ampDAP/ampDAP/callpeak/")
+ampdap <- mergePeakFiles("2024_WRKY/5_CALLPEAK/AMPdap_callpeak_minus_pixHalo/temp/")
+
+ pixHalo <- readRDS("~/2024_WRKY/5_CALLPEAK/pixhalo.rds")
+ dap <- dap[-findOverlaps(dap,pixHalo)@from %>% unique()]
        a <- findOverlapsOfPeaks(unique(dap), unique(public_dap))
        dat <- c(
          "this_study" = a$peaklist$unique.dap. %>% length(),
@@ -170,95 +158,6 @@ p_load(BiocIO,tools,hbmcbioR,JASPAR2020,readxl,ggtext,htmlwidgets,bootnet,tidygr
          edges = list(col = "black", lty = 1, lwd = 2),
          main = "DAP"
        )
-       p1
-       # ggsave("2024_WRKY/5_CALLPEAK/code/plot/DAP.vennplot.pdf", p1)
-       
-       ## -------------------------------
-       ## 2. Public ampDAP
-       ## -------------------------------
-       peakfile <- list.files(
-         path = "2024_WRKY/5_CALLPEAK/Public_DAP_ampDAP/ampDAP/callpeak/",
-         pattern = "narrowPeak$"
-       ) %>% paste0("2024_WRKY/5_CALLPEAK/Public_DAP_ampDAP/ampDAP/callpeak/", .)
-       
-       g <- rtracklayer::import(peakfile[1])
-       for (i in 2:length(peakfile)) {
-         g2 <- rtracklayer::import(peakfile[i])
-         a <- findOverlaps(g, g2)
-         g2 <- g2[-(a@to %>% unique())]
-         g <- c(g, g2)
-       }
-       public_dap <- g[which(grepl(pattern = "Chr[0-9]+", g@seqnames))]
-       
-       ## This study ampDAP
-       peakfile_dap <- list.files(
-         "2024_WRKY/5_CALLPEAK/AMPdap_callpeak_minus_pixHalo/temp/",
-         "narrowPeak$"
-       ) %>% paste0("2024_WRKY/5_CALLPEAK/AMPdap_callpeak_minus_pixHalo/temp/", .)
-       
-       gg <- rtracklayer::import(peakfile_dap[1])
-       for (i in 2:length(peakfile_dap)) {
-         g2 <- rtracklayer::import(peakfile_dap[i])
-         g2 <- g2[which(grepl(pattern = "Chr[0-9]+", g2@seqnames))]
-         a <- findOverlaps(gg, g2)
-         g2 <- g2[-(a@to %>% unique())]
-         gg <- c(gg, g2)
-       }
-       gg <- gg[which(grepl(pattern = "Chr[0-9]+", gg@seqnames))]
-       
-       pixHalo <- readRDS("~/2024_WRKY/5_CALLPEAK/pixhalo.rds")
-       dap <- gg[-findOverlaps(gg, pixHalo)@from %>% unique()]
-       
-       ## Overlap analysis
-       a <- findOverlapsOfPeaks(unique(dap), unique(public_dap))
-       dat <- c(
-         "this_study" = a$peaklist$unique.dap. %>% length(),
-         "previous_study" = a$peaklist$unique.public_dap. %>% length(),
-         "this_study&previous_study" = a$peaklist$`unique.dap.///unique.public_dap.` %>% length()
-       )
-       p2 <- plot(
-         euler(dat),
-         quantities = TRUE,
-         fills = list(fill = c("#FF6E72", "#F7BC66", "#61CA9D")),
-         edges = list(col = "black", lty = 1, lwd = 2),
-         main = "ampDAP"
-       )
-       p2
-       # ggsave("2024_WRKY/5_CALLPEAK/code/plot/ampDAP.vennplot.pdf", p2)
-       
-       ## -------------------------------
-       ## 3. m_ampDAP
-       ## -------------------------------
-       peakfile <- list.files(
-         path = "2024_WRKY/5_CALLPEAK/M_DAP_callpeak_minus_pixHalo/callpeak/",
-         pattern = "narrowPeak$"
-       ) %>% paste0("2024_WRKY/5_CALLPEAK/M_DAP_callpeak_minus_pixHalo/callpeak/", .)
-       
-       g <- rtracklayer::import(peakfile[1])
-       for (i in 2:length(peakfile)) {
-         g2 <- rtracklayer::import(peakfile[i])
-         a <- findOverlaps(g, g2)
-         g2 <- g2[-(a@to %>% unique())]
-         g <- c(g, g2)
-       }
-       m_ampdap <- g[which(grepl(pattern = "Chr[0-9]+", g@seqnames))]
-       
-       pixHalo <- readRDS("~/2024_WRKY/5_CALLPEAK/pixhalo.rds")
-       m_ampdap <- m_ampdap[-findOverlaps(m_ampdap, pixHalo)@from %>% unique()]
-       
-       ## Plot single set
-       dat <- c("medap" = length(m_ampdap))
-       p <- plot(
-         euler(dat),
-         quantities = TRUE,
-         fills = c("#FF6E72"),
-         edges = list(col = "black", lty = 1, lwd = 2),
-         main = "m_ampDAP"
-       )
-       p
-       ggsave("2024_WRKY/5_CALLPEAK/code/plot/m_ampdap.venn.pdf", plot = p)
-
-
 # -----------------------------------------------------------
 #fig1C####
 # -----------------------------------------------------------
@@ -270,21 +169,24 @@ p_load(BiocIO,tools,hbmcbioR,JASPAR2020,readxl,ggtext,htmlwidgets,bootnet,tidygr
        library(fjComm)
        library(magrittr)
        library(stringr)
-       
-       # Parameters
+
+SELEX_6mer_ic<-function(seqs,gapMin=0,gapMax=10)
+{
+  seqs=fjComm::rmdup(as.data.frame(seqs))[[1]]
+  cnts_3mer=fjComm::kmerCntBit_rc(strings = seqs,k=3,diffLen = T,collapse = T,asDf = T,all_possible_k = T,pseudo = 5,rc_combine = T,rmdup = F,rc_k_uniq = F) %>% mutate(freq=counts/sum(counts))
+  cnts_3mer=cnts_3mer$freq%>% set_names(cnts_3mer$kmer)
+  cnts_g6mer=fjComm::gkmerCntBit_rc(strings = seqs,gapNo = 1,k = 3,gapMins = gapMin, gapMaxs = gapMax, pseudo = 5,diffLen = T,posInfo = F,all_possible_k = T,rmdup = F,melt_result = T,rc_combine = T,rc_k_uniq = F) %>% mutate(freq=counts/sum(counts),kmer1=str_sub(kmer,1,3),kmer2=str_sub(kmer,4,-1))
+  cnts_g6mer %<>% mutate(exp_freq=cnts_3mer[kmer1]*cnts_3mer[kmer2]/(gapMax-gapMin+1))
+  with(cnts_g6mer,freq*log2(freq/exp_freq)) %>% sum ## KL divergence
+}
+
+KL_divs=fjComm::mclapply(reads_files,function(file){seqs=readLines(file);SELEX_6mer_ic(seqs)},mc.cores = 20) %>% unlist()
+
        KL_dist_cutoff <- 0.018
-       too_weak <- c("WRKY11","WRKY46","WRKY23")
-       
-       # Load KL divergence data
-       load("~/2024_WRKY/Me-selex/KL_divs_6mer_QC_1.Rdata")
-       m_selex_files <- selex_files
-       load("~/2024_WRKY/Me-selex/KL_divs_6mer_QC_2.Rdata")
        selex_files <- selex_files[selex_files$KL_divs_6mer > KL_dist_cutoff, ]
        m_selex_files <- m_selex_files[m_selex_files$KL_divs_6mer > KL_dist_cutoff, ]
-       
-       # Filter TFs and select top KL-divergence motif per TF
        name <- intersect(m_selex_files$TF, selex_files$TF) %>% setdiff(too_weak)
-       
+
        m_df <- m_selex_files[m_selex_files$TF %in% name, ] %>%
          group_by(TF) %>%
          arrange(desc(KL_divs_6mer)) %>%
@@ -343,7 +245,6 @@ p_load(BiocIO,tools,hbmcbioR,JASPAR2020,readxl,ggtext,htmlwidgets,bootnet,tidygr
          gg_theme_Publication(7) +
          gg_axis_x_label_angle(45)
        
-       gg_save_pdf(plot, 8.7, 6, filename = "plot/m_induced_diver_pearson")
        
        # -------------------------------
        # Spearman correlation heatmap
@@ -367,7 +268,6 @@ p_load(BiocIO,tools,hbmcbioR,JASPAR2020,readxl,ggtext,htmlwidgets,bootnet,tidygr
          gg_theme_Publication(7) +
          gg_axis_x_label_angle(45)
        
-       gg_save_pdf(plot, 8.7, 6, filename = "plot/m_induced_diver_spearman")
 
 
 
