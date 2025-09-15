@@ -1,3 +1,6 @@
+#######################################################
+#Enrichment of consensus dimer motifs in SELEX libraries
+#######################################################
 library(fjComm)
 bk_div_pseudo <- 50
 max_mismatch  <- 0
