@@ -11,10 +11,10 @@
     m_selex_files <- m_selex_files[m_selex_files$KL_divs_6mer>KL_dist_cutoff,]
     
     name <- intersect(m_selex_files$TF,selex_files$TF) #%>% setdiff(too_weak) #除去信号太弱的
-    # m_df <- m_selex_files[m_selex_files$TF%in%name &m_selex_files$KL_divs_6mer>KL_dist_cutoff,] %>% group_by(TF) %>% arrange(desc(KL_divs_6mer)) %>% dplyr::slice_head(n = 1) %>% ungroup()
+
     m_df <- m_selex_files[m_selex_files$TF%in%name ,] %>% group_by(TF) %>% arrange(desc(KL_divs_6mer)) %>% dplyr::slice_head(n = 1) %>% ungroup()
     m_df$TF <- paste0(m_df$TF,"_m")
-    # s_df <- selex_files[selex_files$TF%in%name &selex_files$KL_divs_6mer>KL_dist_cutoff,]%>% group_by(TF) %>% arrange(desc(KL_divs_6mer)) %>% dplyr::slice_head(n = 1) %>% ungroup()
+   
     s_df <- selex_files[selex_files$TF%in%name ,]%>% group_by(TF) %>% arrange(desc(KL_divs_6mer)) %>% dplyr::slice_head(n = 1) %>% ungroup()
     s_df$TF <- paste0(s_df$TF,"_s")
     merge_df <- bind_rows(s_df,m_df)
@@ -71,13 +71,13 @@
     plot <- ggplot(df, aes(x = Var2, y = Var1)) +
       geom_tile(color = "white", fill = "white") +
       geom_point(
-        aes(size = size + 2, fill = value),  # 使用 fill 映射颜色（而非 color）
+        aes(size = size + 2, fill = value),  
         alpha = 0.99,
-        shape = 21,           # 关键：使用可填充的带边框形状（21-25）
-        color = "black",       # 固定边框颜色为黑色 
-        stroke = 0.5           # 边框粗细 
+        shape = 21,         
+        color = "black",       
+        stroke = 0.5    
       ) +
-      scale_fill_gradientn(    # 注意改为 scale_fill_*（而非 scale_color_*）
+      scale_fill_gradientn(   
         colors = diverge_hcl(n = 100, palette = "Blue-Red3"),
         name = "Log2 fold change\n(mSELEX / SELEX)", 
         limits = c(-2.5, 2.5)
