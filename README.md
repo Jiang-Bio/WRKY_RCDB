@@ -1,4 +1,4 @@
-# The Specificity Landscape of AtWRKYs Reveals the Bidirectional Influence of non-CG Methylation
+# The Specificity & Cistrome Landscape of WRKYs (with WRCD Database)
 
 ![image](https://github.com/Jiang-Bio/WRKY_RCDB/blob/master/graphical_abstract.png)
 
@@ -31,7 +31,7 @@
 
 WRKY Regulatory Code Database (WRKYRCDB):
 - Access curated motifs, binding data, and analyses at 👉 https://transysbio.cn/WRKYRCDB.php
-
+![image](https://github.com/Jiang-Bio/WRKY_RCDB/blob/master/WRKYRCDB.png)
 ---
 
 Code repository:
