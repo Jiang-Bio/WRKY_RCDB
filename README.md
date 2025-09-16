@@ -34,41 +34,19 @@ WRKY Regulatory Code Database (WRKYRCDB):
   
 ![image](https://github.com/Jiang-Bio/WRKY_RCDB/blob/master/WRKYRCDB.png)
 
-Database Modules:
+- [x] Database Modules:
 
-- Home:
+- Home: Overview of datasets and navigation to other modules.
 
-Overview of datasets and navigation to other modules.
+- TFBS: Collects DAP-seq/ChIP-seq libraries. Provides gene ID, motif logo, E-value, and links to bed/bigwig files.
 
-- TFBS:
+- Specificity: Collects SELEX-based libraries. Visualizes monomeric and dimeric motifs.
 
-Collects DAP-seq/ChIP-seq libraries.
+- JBrowse: Preloaded with all DAP-seq datasets.Enables genome-wide visualization of WRKY binding sites.
 
-Provides gene ID, motif logo, E-value, and links to bed/bigwig files.
+- Tools: Compare methylated vs. unmethylated regulatory networks.Perform GO enrichment analysis. Search for CREs neighboring a user-specified gene.
 
-- Specificity:
-
-Collects SELEX-based libraries.
-
-Visualizes monomeric and dimeric motifs.
-
-- JBrowse:
-
-Preloaded with all DAP-seq datasets.
-
-Enables genome-wide visualization of WRKY binding sites.
-
-- Tools:
-
-Compare methylated vs. unmethylated regulatory networks.
-
-Perform GO enrichment analysis.
-
-Search for CREs neighboring a user-specified gene.
-
-- Download:
-
-Provides links to all source files of WRKY-DNA interaction libraries.
+- Download: Provides links to all source files of WRKY-DNA interaction libraries.
 
 ---
 
