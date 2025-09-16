@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta charset='utf-8' content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="img/favicon.png" />
+  <link rel="apple-touch-icon" href="img/favicon.png" />
+  <link rel="stylesheet" href="./wrky/css/style.css" />
+  <link rel="stylesheet" href="./css/htmlpage-digimedia-v2.css" />
+  <link rel="stylesheet" type="text/css" href="./css/jquery.dataTables.min.css">
+  <!-- <link rel="stylesheet" href="./css/bootstrap.min.css" /> -->
+  <!-- <link rel="stylesheet" href="./css/fontawesome.css" /> -->
+  <!-- <link rel="stylesheet" href="./css/animated.css" /> -->
+  <!-- <link rel="stylesheet" href="./css/owl.css" /> -->
+  <!-- <link rel="stylesheet" href="./wrky/css/yellow.css" /> -->
+  <script src="./js/jquery-3.6.0.min.js"></script>
+  <script src="./js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#download-table').DataTable({
+        "pageLength": 25,
+      });
+      $('#download-table-2').DataTable({
+        "pageLength": 25,
+      });
+    });
+  </script>
+  <style>
+    .tabs {
+      display: flex;
+      justify-content: left;
+      align-items: left;
+      cursor: pointer;
+
+    }
+
+    .tab {
+      margin: 0 20px 5px 0;
+      padding: 5px 20px;
+      cursor: pointer;
+      border-radius: 15px;
+      background: #0089A7;
+      color: #fff;
+
+    }
+
+    .tab:hover {
+      background: #0089A7;
+      opacity: 0.5;
+    }
+
+    .content {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    a,
+    a:hover {
+      color: rgb(0, 0, 0)
+    }
+
+    th,
+    td {
+      padding: 15px 15px;
+      text-align: center;
+      border: 1px solid #ffffff;
+      font-size: 15px;
+      font-weight: 400;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .search-container {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .search-box {
+      width: 60%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+
+
+
+    /* 设置下载表格样式 */
+    .download-table {
+      width: 80%;
+      border-collapse: collapse;
+      color: #232222;
+      margin: 25px auto;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      box-shadow: 0 20px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .download-table thead tr {
+      background: #0089A7;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .download-table tbody tr:nth-of-type(even) {
+      background-color: #f8f9fa;
+    }
+
+    .download-table tbody tr:hover {
+      background-color: #f1f4f7;
+    }
+
+    .download-btn {
+
+      background: rgb(168, 168, 168);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      /* 确保margin生效 */
+      margin-right: 1em;
+      /* 使用相对单位 */
+    }
+
+    .download-btn1 {
+      background: #2980b9;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      /* 确保margin生效 */
+      margin-right: 1em;
+      /* 使用相对单位 */
+    }
+
+    .download-table tbody td:last-child {
+      text-align: center;
+    }
+
+    .download-btn:hover {
+      background: #3498db;
+      box-shadow: 0 2px 8px rgba(52, 152, 219, 0.4);
+    }
+
+    @media screen and (max-width: 768px) {
+      .download-table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .download-btn {
+        margin-right: 0.5em;
+        /* 移动端缩小间距 */
+      }
+    }
+  </style>
+
+</head>
+
+<header data-wow-duration="0.75s" data-wow-delay="0s" class="header-area header-sticky wow slideInDown">
+  <div class="container d-flex align-items-center justify-content-between">
+    <div class="logo">
+      <h1><a style="color: white;" href="WRKYRCDB.php" style="color: rgb(255, 255, 255);">WRKY&nbsp;RCDB</a></h1>
+    </div>
+    <nav class="navbar navbar-expand-lg center-nav transparent navbar-light">
+      <div class="container flex-lg-row flex-nowrap align-items-center">
+        <div class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
+          <div class="offcanvas-body ms-lg-auto d-flex flex-column h-100">
+            <ul class="navbar-nav">
+              <li class="nav-item active"><a href="./WRKYRCDB.php" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">Home</a></li>
+              <li class="nav-item active"><a href="./WRCDsearch.html" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">TFBS</a></li>
+              <li class="nav-item active"><a href="./WRCDbrowse.html" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">Specificity</a></li>
+              <li class="nav-item active"><a href="./WRCDjbrowse.html" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">Jbrowse</a></li>
+              <li class="nav-item dropdown"><a href="" data-bs-toggle="dropdown" class="active nav-link dropdown-toggle"
+                  style="color: rgb(255, 255, 255);">Tools</a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a href="./wrky/WRCDtools1.html" class="dropdown-item">TF-DNA Interaction
+                      Network</a></li>
+                  <li class="nav-item"><a href="./wrky/WRCDtools2.php" class="dropdown-item">GO Enrichment</a></li>
+                  <!-- <li class="nav-item"><a href="./wrky/WRCDtools3.php" class="dropdown-item">SELEX PCA</a></li> -->
+                  <!-- <li class="nav-item"><a href="./wrky/WRCDmotifmatch.php" class="dropdown-item">Motif Match</a></li> -->
+                  <li class="nav-item"><a href="./WRCDindex.html" class="dropdown-item">Gene Search</a></li>
+                </ul>
+              </li>
+              <li class="nav-item active"><a href="./WRCDdownload.html" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">Download</a></li>
+              <!-- <li class="nav-item active"><a href="./WRCDcontact.php" class="active nav-link">Contact</a></li> -->
+            </ul><!-- /.navbar-nav -->
+          </div><!-- /.offcanvas-body -->
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+  </div>
+</header>
+
+<body>
+
+  <section id="tf-section" style="padding: 50px;"></section>
+  <div>
+    <div class="container">
+      <div style="text-align: center;">
+        <h3><strong style="color: #fe664e;">Data Download</strong></h3>
+        <h7 style=" color: rgba(0, 0, 0, 0.71); text-align: justify;">
+          DNA-binding Specificity --- without methylation: <strong style="color: #fe664e;">SELEX</strong> and <strong
+            style="color: #fe664e;">PBM</strong>;&nbsp;
+          with full methylation: <strong style="color: #fe664e;">methyl-SELEX</strong><br>
+          Genome-wide Binding Sites --- without methylation: <strong style="color: #fe664e;">ampDAP</strong>;&nbsp;
+          with full methylation: <strong style="color: #fe664e;">methyl-ampDAP</strong>;&nbsp;
+          with natural methylation: <strong style="color: #fe664e;">DAP</strong> and <strong
+            style="color: #fe664e;">ChIP</strong><br>
+          Links to samples generated in this study are shaded <strong
+            style="color: #2980b9; text-decoration: underline;">blue </strong>, links to previously published data are
+          shaded <strong style="color :rgb(168, 168, 168);text-decoration: underline;">grey</strong>.
+        </h7>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin: 20px auto;width: 80%;">
+    <div div class="content active" id="content1">
+      <table id="download-table" class="download-table">
+        <thead>
+          <tr>
+            <th style="text-align: center;">WRKY</th>
+            <th style="text-align: center;">SELEX/PBM</th>
+            <th style="text-align: center;">methyl-SELEX</th>
+            <th style="text-align: center;">DAP_Root</th>
+            <th style="text-align: center;">DAP_Flower</th>
+            <th style="text-align: center;">DAP_Cotyledon</th>
+            <th style="text-align: center;">DAP_Silique</th>
+            <th style="text-align: center;">ampDAP</th>
+            <th style="text-align: center;">methyl-ampDAP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-header">WRKY1</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY2</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY3</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY4</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY5</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY6</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn1"
+                title="O'Malley RC, cell, 2016">sample2</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY7</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY8</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY9</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY10</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY11</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY12</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> <a href="" class="download-btn" title="Franco-Zorrilla JM, PNAS, 2014">PBM
+                2</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY13</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY14</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY15</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY16</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY17</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY18</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> <a href="" class="download-btn" title="Franco-Zorrilla JM, PNAS, 2014">PBM
+                2</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY19</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY20</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY21</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY22</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn1"
+                title="O'Malley RC, cell, 2016">sample2</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY23</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY24</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY25</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY26</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY27</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY28</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY29</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY30</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY31</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY32</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY33</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY34</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY35</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY36</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY37</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY38</td>
+            <td> <a href="" class="download-btn" title="Franco-Zorrilla JM, PNAS, 2014">PBM 2</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY39</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY40</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn1"
+                title="O'Malley RC, cell, 2016">sample2</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY41</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY42</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY43</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY44</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY45</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> <a href="" class="download-btn" title="Franco-Zorrilla JM, PNAS, 2014">PBM
+                2</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY46</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY47</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY48</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY49</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY50</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY51</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY52</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY53</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY54</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY55</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY56</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY57</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY58</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY59</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY60</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY61</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY62</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY63</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY64</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY65</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY66</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY67</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY68</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY69</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY70</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY71</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY72</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY73</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY74</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+            <td style="text-align: center;">none</td>
+          </tr>
+          <tr>
+            <td class="row-header">WRKY75</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53348" class="download-btn"
+                title="Weirauch MT, cell, 2014">PBM 1</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">methyl-SELEX</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td style="text-align: center;">none</td>
+            <td> <a href="https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA257554&o=acc_s%3Aa" class="download-btn"
+                title="O'Malley RC, cell, 2016">sample2</a> <a
+                href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+            <td> <a href="https://ngdc.cncb.ac.cn/bioproject/browse/PRJCA040216" class="download-btn1"
+                title="this study">sample1</a> </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+
+
+
+</body>
+<footer data-gjs-highlightable="true" id="imc5ni" data-gjs-type="default" draggable="true" class="bg-navy text-inverse">
+
+  <div class="row justify-content-center">
+
+    <div data-gjs-highlightable="true" id="ixuv3cn" data-gjs-type="default" draggable="true" class="col-md-4 col-lg-3">
+      <div data-gjs-highlightable="true" id="ix9n4ur" data-gjs-type="text" draggable="true" class="widget">
+        <h4 id="iy7kgog" data-gjs-type="text" draggable="true" class="widget-title text-white mb-3">Address</h4>
+        <p id="iug8hjb" data-gjs-type="text" draggable="true"> Fujian Agriculture and Forestry University</p>
+        <p>No.15 Shangxiadian Road, Cangshan District Fuzhou 350028, China</p>
+      </div><!-- /.widget -->
+    </div><!-- /column -->
+
+    <div data-gjs-highlightable="true" id="im0x86i" data-gjs-type="default" draggable="true" class="col-md-12 col-lg-3">
+      <div data-gjs-highlightable="true" id="i81wsti" data-gjs-type="default" draggable="true" class="widget">
+        <h4 data-gjs-highlightable="true" id="ivhyxfq" data-gjs-type="text" draggable="true" class="widget-title text-white mb-3">Email</h4>
+        <p data-gjs-highlightable="true" id="idusp95" data-gjs-type="text" draggable="true" class="mb-5">Contact us by email to: <br><a id="i51y2gi" data-gjs-type="link" draggable="true" href="mailto:jiangdk0722@163.com" class="hover">
+            jiangdk0722@163.com</a> and <a id="i51y2gi" data-gjs-type="link" draggable="true" href="mailto:fjzhu@fafu.edu.cn" class="hover">
+            fjzhu@fafu.edu.cn</a> </p><!-- /.newsletter-wrapper -->
+        <p data-gjs-highlightable="true" id="idusp95" data-gjs-type="text" draggable="true" class="mb-5">TranSysBio Lab: <a data-gjs-type="link" draggable="true" href="http://hbmcsysbio.team/" class="hover">
+            http://hbmcsysbio.team/</a></p><!-- /.newsletter-wrapper -->
+      </div><!-- /.widget -->
+    </div><!-- /column -->
+
+    <div data-gjs-highlightable="true" id="im0x86i" data-gjs-type="default" draggable="true" class="col-md-12 col-lg-3">
+      <div data-gjs-highlightable="true" id="i81wsti" data-gjs-type="default" draggable="true" class="widget">
+
+        <p data-gjs-highlightable="true" id="idusp95" data-gjs-type="text" draggable="true" class="mb-5">
+        <a href="https://beian.miit.gov.cn/" title="Fafu" target="_blank"> 闽ICP备30174900704003793号</a>
+          </p><!-- /.newsletter-wrapper -->
+        <p data-gjs-highlightable="true" id="idusp95" data-gjs-type="text" draggable="true" class="mb-5">
+        <img style=" height: 1em; width: auto;" src="./img/beian.png" alt="">
+        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=35010402351728" rel="noreferrer" target="_blank">闽公网安备35010402351728号</a>
+        </p><!-- /.newsletter-wrapper -->
+      </div><!-- /.widget -->
+    </div><!-- /column -->
+  </div><!--/.row -->
+</footer>
+
+</html>
