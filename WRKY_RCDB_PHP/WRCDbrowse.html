@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset='utf-8' content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"> <!--适配移动端-->
+  <title>TF Search</title>
+  <link rel="icon" href="img/favicon.png" />
+  <link rel="stylesheet" href="./css/htmlpage-digimedia-v2.css" />
+  <link rel="stylesheet" href="./wrky/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="./css/jquery.dataTables.min.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i">
+  <script src="js/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/17.5.0/lazyload.min.js"></script>
+  <script src="./js/jquery.dataTables.min.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLR2D5HESW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'G-QLR2D5HESW');
+  </script>
+  <script>
+    function table_ath_search(athID) {
+      if (athID && athID != '-') {
+        window.open(
+          `https://www.arabidopsis.org/results?mainType=general&searchText=${athID}&category=genes`
+        )
+      }
+    }
+    $(document).ready(function () {
+      var table = $('#download-table').DataTable({
+        "pageLength": 10,
+        "initComplete": function () {
+          new LazyLoad({
+            elements_selector: ".lazyload",
+            threshold: 300,
+            callback_loaded: function (el) {
+              $(el).addClass('loaded');
+            }
+          });
+          table.on('draw.dt', function () {
+            new LazyLoad({
+              elements_selector: ".lazyload",
+              threshold: 300
+            });
+          });
+        }
+      });
+    });
+  </script>
+
+
+  <style>
+    .browse_css {
+      display: flex;
+      flex-wrap: wrap;
+      /*justify-content:center;*/
+    }
+
+    .browse_css label {
+      margin: 0 20px 5px 0;
+      padding: 10px 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      background: #0089A7;
+      color: #fff;
+      opacity: 0.5;
+    }
+
+    .browse_content {
+      order: 1;
+      display: none;
+      width: 100%;
+      /* line-height: 5.5;
+      font-size: 5em; */
+      padding: 10px;
+    }
+
+    .browse_css input:checked+label,
+    .browse_css label:hover {
+      opacity: 1;
+      font-weight: bold;
+    }
+
+    .browse_css input:checked+label+.browse_content {
+      display: initial;
+    }
+
+    .icon-box {
+      background-color: rgb(255, 255, 255);
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 70px;
+    }
+
+
+    .icon-box:hover {
+      background-color: rgb(221, 231, 241);
+      cursor: pointer;
+    }
+  </style>
+  <style>
+    a:hover {
+      color: rgb(0, 0, 0)
+    }
+
+    th,
+    td {
+      padding: 15px 15px;
+      text-align: center;
+      height: 20px;
+      border: 1px solid #ffffff;
+      /* font-size: 15px; */
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+
+
+    .download-table {
+      width: 80%;
+      border-collapse: collapse;
+      color: rgb(0, 0, 0);
+      margin: 25px auto;
+      /* font-family: 'Segoe UI', sans-serif; */
+      text-align: center;
+      box-shadow: 0 20px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .download-table thead tr {
+      background: rgb(54, 143, 163);
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .download-table tbody tr:nth-of-type(even) {
+      background-color: #f8f9fa;
+    }
+
+    .download-table tbody tr:hover {
+      background-color: #f1f4f7;
+    }
+
+    .download-btn {
+      background: #2980b9;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+      margin: 5px;
+    }
+
+    .download-table tbody td:last-child {
+      text-align: center;
+    }
+
+    .download-btn:hover {
+      background: #3498db;
+      box-shadow: 0 2px 8px rgba(52, 152, 219, 0.4);
+    }
+
+    @media screen and (max-width: 768px) {
+      .download-table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+
+<header data-wow-duration="0.75s" data-wow-delay="0s" class="header-area header-sticky wow slideInDown">
+  <div class="container d-flex align-items-center justify-content-between">
+    <div class="logo">
+      <h1><a style="color: white;" href="WRKYRCDB.php">WRKY&nbsp;RCDB</a></h1>
+    </div>
+    <nav class="navbar navbar-expand-lg center-nav transparent navbar-light">
+      <div class="container flex-lg-row flex-nowrap align-items-center">
+        <div class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
+          <div class="offcanvas-body ms-lg-auto d-flex flex-column h-100">
+            <ul class="navbar-nav">
+              <li class="nav-item active"><a href="./WRKYRCDB.php" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">Home</a></li>
+              <li class="nav-item active"><a href="./WRCDsearch.html" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">TFBS</a></li>
+              <li class="nav-item active"><a href="./WRCDbrowse.html" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">Specificity</a></li>
+              <li class="nav-item active"><a href="./WRCDjbrowse.html" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">Jbrowse</a></li>
+              <li class="nav-item dropdown"><a href="" data-bs-toggle="dropdown" class="active nav-link dropdown-toggle"
+                  style="color: rgb(255, 255, 255);">Tools</a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a href="./wrky/WRCDtools1.html" class="dropdown-item">TF-DNA Interaction
+                      Network</a></li>
+                  <li class="nav-item"><a href="./wrky/WRCDtools2.php" class="dropdown-item">GO Enrichment</a></li>
+                  <!-- <li class="nav-item"><a href="./wrky/WRCDtools3.php" class="dropdown-item">SELEX PCA</a></li> -->
+                  <!-- <li class="nav-item"><a href="./wrky/WRCDmotifmatch.php" class="dropdown-item">Motif Match</a></li> -->
+                  <li class="nav-item"><a href="./WRCDindex.html" class="dropdown-item">Gene Search</a></li>
+                </ul>
+              </li>
+              <li class="nav-item active"><a href="./WRCDdownload.html" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">Download</a></li>
+              <!-- <li class="nav-item active"><a href="./WRCDcontact.php" class="active nav-link">Contact</a></li> -->
+            </ul><!-- /.navbar-nav -->
+          </div><!-- /.offcanvas-body -->
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+  </div>
+</header>
+
+<section id="tf-section" style="padding: 50px;"></section>
+
+<body>
+
+  <div class="container">
+    <h3 style="color: #fe664e;text-align: center;"><strong>Specificity Models of AtWRKYs</strong></h3>
+    <h7 style=" color: rgba(0, 0, 0, 0.71); text-align: justify;">This page displays the motif models derived from
+      sequence specificity libraries (<strong style="color: #fe664e;">SELEX, methyl-SELEX, and PBM</strong>).
+      Both the monomeric and dimeric binding models are displayed. Binding models with higher fold enrichments (the
+      "Enrich" field) in the SELEX libraries are with higher affinities to the TF.</h7>
+  </div>
+
+  <section id="tf-section" style="padding: 10px;">
+  </section>
+
+  <div class="container"
+    style="background: linear-gradient(135deg,rgb(233, 233, 233), rgb(233, 233, 233));
+    padding: 40px 20px;border-radius: 8px;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);margin: 10px auto;width: 80%;max-width: 1520px;">
+    <section id="features" class="features" style="padding:0px">
+      <div class="browse_css d-md-flex align-items-md-stretch">
+
+        <input id="browse1" type="radio" name="browse" checked style="display:none;" />
+        <label class="col-lg-3 col-md-4 col-sm-6"
+          style="display: flex; justify-content: center; height: 60px; font-size: 150%; font-weight:400 "
+          for="browse1">SELEX</label>
+        <div class="browse_content container " style=" line-height: 5.5; font-size: 5em; ">
+          <div class="row">
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY11').submit();">
+                  <h3>WRKY11&nbsp;(35)</h3>
+                </a>
+                <form id='WRKY11' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY11'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY12').submit();">
+                  <h3>WRKY12&nbsp;(61)</h3>
+                </a>
+                <form id='WRKY12' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY12'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY13').submit();">
+                  <h3>WRKY13&nbsp;(38)</h3>
+                </a>
+                <form id='WRKY13' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY13'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY14').submit();">
+                  <h3>WRKY14&nbsp;(65)</h3>
+                </a>
+                <form id='WRKY14' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY14'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY15').submit();">
+                  <h3>WRKY15&nbsp;(65)</h3>
+                </a>
+                <form id='WRKY15' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY15'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY16').submit();">
+                  <h3>WRKY16&nbsp;(2)</h3>
+                </a>
+                <form id='WRKY16' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY16'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY17').submit();">
+                  <h3>WRKY17&nbsp;(62)</h3>
+                </a>
+                <form id='WRKY17' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY17'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY18').submit();">
+                  <h3>WRKY18&nbsp;(64)</h3>
+                </a>
+                <form id='WRKY18' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY18'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY21').submit();">
+                  <h3>WRKY21&nbsp;(13)</h3>
+                </a>
+                <form id='WRKY21' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY21'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY23').submit();">
+                  <h3>WRKY23&nbsp;(46)</h3>
+                </a>
+                <form id='WRKY23' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY23'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY24').submit();">
+                  <h3>WRKY24&nbsp;(54)</h3>
+                </a>
+                <form id='WRKY24' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY24'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY25').submit();">
+                  <h3>WRKY25&nbsp;(44)</h3>
+                </a>
+                <form id='WRKY25' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY25'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY26').submit();">
+                  <h3>WRKY26&nbsp;(50)</h3>
+                </a>
+                <form id='WRKY26' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY26'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY27').submit();">
+                  <h3>WRKY27&nbsp;(23)</h3>
+                </a>
+                <form id='WRKY27' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY27'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY28').submit();">
+                  <h3>WRKY28&nbsp;(31)</h3>
+                </a>
+                <form id='WRKY28' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY28'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY29').submit();">
+                  <h3>WRKY29&nbsp;(45)</h3>
+                </a>
+                <form id='WRKY29' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY29'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY3').submit();">
+                  <h3>WRKY3&nbsp;(63)</h3>
+                </a>
+                <form id='WRKY3' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY3'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY30').submit();">
+                  <h3>WRKY30&nbsp;(67)</h3>
+                </a>
+                <form id='WRKY30' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY30'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY31').submit();">
+                  <h3>WRKY31&nbsp;(57)</h3>
+                </a>
+                <form id='WRKY31' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY31'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY32').submit();">
+                  <h3>WRKY32&nbsp;(40)</h3>
+                </a>
+                <form id='WRKY32' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY32'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY33').submit();">
+                  <h3>WRKY33&nbsp;(67)</h3>
+                </a>
+                <form id='WRKY33' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY33'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY35').submit();">
+                  <h3>WRKY35&nbsp;(64)</h3>
+                </a>
+                <form id='WRKY35' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY35'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY36').submit();">
+                  <h3>WRKY36&nbsp;(2)</h3>
+                </a>
+                <form id='WRKY36' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY36'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY39').submit();">
+                  <h3>WRKY39&nbsp;(63)</h3>
+                </a>
+                <form id='WRKY39' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY39'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY4').submit();">
+                  <h3>WRKY4&nbsp;(67)</h3>
+                </a>
+                <form id='WRKY4' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY4'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY40').submit();">
+                  <h3>WRKY40&nbsp;(66)</h3>
+                </a>
+                <form id='WRKY40' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY40'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY41').submit();">
+                  <h3>WRKY41&nbsp;(42)</h3>
+                </a>
+                <form id='WRKY41' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY41'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY42').submit();">
+                  <h3>WRKY42&nbsp;(60)</h3>
+                </a>
+                <form id='WRKY42' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY42'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY43').submit();">
+                  <h3>WRKY43&nbsp;(44)</h3>
+                </a>
+                <form id='WRKY43' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY43'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY44').submit();">
+                  <h3>WRKY44&nbsp;(65)</h3>
+                </a>
+                <form id='WRKY44' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY44'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY45').submit();">
+                  <h3>WRKY45&nbsp;(13)</h3>
+                </a>
+                <form id='WRKY45' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY45'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY46').submit();">
+                  <h3>WRKY46&nbsp;(65)</h3>
+                </a>
+                <form id='WRKY46' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY46'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY47').submit();">
+                  <h3>WRKY47&nbsp;(44)</h3>
+                </a>
+                <form id='WRKY47' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY47'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY48').submit();">
+                  <h3>WRKY48&nbsp;(47)</h3>
+                </a>
+                <form id='WRKY48' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY48'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY49').submit();">
+                  <h3>WRKY49&nbsp;(60)</h3>
+                </a>
+                <form id='WRKY49' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY49'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY50').submit();">
+                  <h3>WRKY50&nbsp;(15)</h3>
+                </a>
+                <form id='WRKY50' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY50'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY51').submit();">
+                  <h3>WRKY51&nbsp;(58)</h3>
+                </a>
+                <form id='WRKY51' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY51'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY53').submit();">
+                  <h3>WRKY53&nbsp;(61)</h3>
+                </a>
+                <form id='WRKY53' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY53'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY54').submit();">
+                  <h3>WRKY54&nbsp;(49)</h3>
+                </a>
+                <form id='WRKY54' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY54'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY55').submit();">
+                  <h3>WRKY55&nbsp;(68)</h3>
+                </a>
+                <form id='WRKY55' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY55'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY56').submit();">
+                  <h3>WRKY56&nbsp;(39)</h3>
+                </a>
+                <form id='WRKY56' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY56'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY60').submit();">
+                  <h3>WRKY60&nbsp;(51)</h3>
+                </a>
+                <form id='WRKY60' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY60'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY63').submit();">
+                  <h3>WRKY63&nbsp;(59)</h3>
+                </a>
+                <form id='WRKY63' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY63'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY65').submit();">
+                  <h3>WRKY65&nbsp;(42)</h3>
+                </a>
+                <form id='WRKY65' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY65'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY69').submit();">
+                  <h3>WRKY69&nbsp;(26)</h3>
+                </a>
+                <form id='WRKY69' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY69'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY7').submit();">
+                  <h3>WRKY7&nbsp;(48)</h3>
+                </a>
+                <form id='WRKY7' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY7'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY70').submit();">
+                  <h3>WRKY70&nbsp;(63)</h3>
+                </a>
+                <form id='WRKY70' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY70'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY71').submit();">
+                  <h3>WRKY71&nbsp;(68)</h3>
+                </a>
+                <form id='WRKY71' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY71'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY72').submit();">
+                  <h3>WRKY72&nbsp;(2)</h3>
+                </a>
+                <form id='WRKY72' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY72'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY75').submit();">
+                  <h3>WRKY75&nbsp;(48)</h3>
+                </a>
+                <form id='WRKY75' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY75'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY8').submit();">
+                  <h3>WRKY8&nbsp;(41)</h3>
+                </a>
+                <form id='WRKY8' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY8'>
+                </form>
+              </div>
+            </div>
+            <div class='col-lg-3 col-md-4 col-sm-6' style='margin-top: 0.2em;'>
+              <div class='icon-box'>
+                <a href='javascript:;' style='color:black;' onclick="document.getElementById('WRKY9').submit();">
+                  <h3>WRKY9&nbsp;(69)</h3>
+                </a>
+                <form id='WRKY9' action='browse_1.php' method='post' style='display: none;'>
+                  <input type='hidden' name='name' value='WRKY9'>
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <input id="browse2" type="radio" name="browse" style="display:none;" />
+        <label class="col-lg-3 col-md-4 col-sm-6"
+          style="display: flex; justify-content: center; height: 60px; font-size: 150%; font-weight:400 "
+          for="browse2">Methyl-SELEX</label>
+        <div class="browse_content container" style=" line-height: 5.5; font-size: 5em; ">
+          <div class="row">
+
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY11_Meselex').submit();">
+                  <h3>WRKY11&nbsp;(1)</h3>
+                </a>
+                <form id="WRKY11_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY11_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY14_Meselex').submit();">
+                  <h3>WRKY14&nbsp;(22)</h3>
+                </a>
+                <form id="WRKY14_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY14_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY15_Meselex').submit();">
+                  <h3>WRKY15&nbsp;(16)</h3>
+                </a>
+                <form id="WRKY15_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY15_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY18_Meselex').submit();">
+                  <h3>WRKY18&nbsp;(5)</h3>
+                </a>
+                <form id="WRKY18_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY18_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY23_Meselex').submit();">
+                  <h3>WRKY23&nbsp;(5)</h3>
+                </a>
+                <form id="WRKY23_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY23_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY25_Meselex').submit();">
+                  <h3>WRKY25&nbsp;(8)</h3>
+                </a>
+                <form id="WRKY25_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY25_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY28_Meselex').submit();">
+                  <h3>WRKY28&nbsp;(29)</h3>
+                </a>
+                <form id="WRKY28_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY28_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY29_Meselex').submit();">
+                  <h3>WRKY29&nbsp;(11)</h3>
+                </a>
+                <form id="WRKY29_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY29_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY32_Meselex').submit();">
+                  <h3>WRKY32&nbsp;(5)</h3>
+                </a>
+                <form id="WRKY32_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY32_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY33_Meselex').submit();">
+                  <h3>WRKY33&nbsp;(2)</h3>
+                </a>
+                <form id="WRKY33_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY33_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY35_Meselex').submit();">
+                  <h3>WRKY35&nbsp;(12)</h3>
+                </a>
+                <form id="WRKY35_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY35_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY4_Meselex').submit();">
+                  <h3>WRKY4&nbsp;(7)</h3>
+                </a>
+                <form id="WRKY4_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY4_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY40_Meselex').submit();">
+                  <h3>WRKY40&nbsp;(16)</h3>
+                </a>
+                <form id="WRKY40_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY40_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY45_Meselex').submit();">
+                  <h3>WRKY45&nbsp;(1)</h3>
+                </a>
+                <form id="WRKY45_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY45_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY46_Meselex').submit();">
+                  <h3>WRKY46&nbsp;(2)</h3>
+                </a>
+                <form id="WRKY46_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY46_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY48_Meselex').submit();">
+                  <h3>WRKY48&nbsp;(13)</h3>
+                </a>
+                <form id="WRKY48_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY48_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY55_Meselex').submit();">
+                  <h3>WRKY55&nbsp;(1)</h3>
+                </a>
+                <form id="WRKY55_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY55_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY65_Meselex').submit();">
+                  <h3>WRKY65&nbsp;(2)</h3>
+                </a>
+                <form id="WRKY65_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY65_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY70_Meselex').submit();">
+                  <h3>WRKY70&nbsp;(5)</h3>
+                </a>
+                <form id="WRKY70_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY70_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY71_Meselex').submit();">
+                  <h3>WRKY71&nbsp;(20)</h3>
+                </a>
+                <form id="WRKY71_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY71_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY75_Meselex').submit();">
+                  <h3>WRKY75&nbsp;(2)</h3>
+                </a>
+                <form id="WRKY75_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY75_Meselex">
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top: 0.2em;">
+              <div class="icon-box">
+                <a href="javascript:;" style="color:black;"
+                  onclick="document.getElementById('WRKY8_Meselex').submit();">
+                  <h3>WRKY8&nbsp;(2)</h3>
+                </a>
+                <form id="WRKY8_Meselex" action="browse_1.php" method="post" style="display: none;">
+                  <input type="hidden" name="name" value="WRKY8_Meselex">
+                </form>
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+
+
+        <input id="browse" type="radio" name="browse" style="display:none;" />
+        <label class="col-lg-3 col-md-4 col-sm-6"
+          style="display: flex; justify-content: center; height: 60px; font-size: 150%; font-weight:400 "
+          for="browse">PBM</label>
+        <div class="browse_content container " style="max-width: 1500px;">
+
+          <div id="tf-members" class="tf-members"
+            style="background: linear-gradient(135deg, #f8f9fa, #e3e7ea);padding: 10px 10px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); margin: 10px auto; width: 100%;">
+            <table id="download-table" class="download-table">
+              <thead>
+                <tr>
+                  <th style='text-align: center;'>Name</th>
+                  <th style='text-align: center;'>Study</th>
+                  <th style='text-align: center;'>Species</th>
+                  <th style='text-align: center;'>Type</th>
+                  <th style='text-align: center;'>ID</th>
+                  <th style='text-align: center;'>Motif Logo</th>
+                  <th style='text-align: center;'>IC</th>
+                  <th style='text-align: center;'>Concensus</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>WRKY38 </td>
+                  <td>Franco-Zorrilla et al, PNAS. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT5G22570')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT5G22570 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY38_Franco-Zorrilla.png">
+                      <img src="data/table_file/WRKY38_Franco-Zorrilla.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 11.91 </td>
+                  <td> NNRGTCAACNN </td>
+                </tr>
+                <tr>
+                  <td>WRKY45 </td>
+                  <td>Franco-Zorrilla et al, PNAS. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT3G01970')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT3G01970 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY45_Franco-Zorrilla.png">
+                      <img src="data/table_file/WRKY45_Franco-Zorrilla.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 9.94 </td>
+                  <td> NNRGTCAACGN </td>
+                </tr>
+                <tr>
+                  <td>WRKY18 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT4G31800')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT4G31800 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY18_Weirauch.png">
+                      <img src="data/table_file/WRKY18_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 10.2 </td>
+                  <td> NHRGTCAANN </td>
+                </tr>
+                <tr>
+                  <td>WRKY11 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT4G31550')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT4G31550 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY11_Weirauch.png">
+                      <img src="data/table_file/WRKY11_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 6.32 </td>
+                  <td> NNGTCAACND </td>
+                </tr>
+                <tr>
+                  <td>WRKY12 </td>
+                  <td>Franco-Zorrilla et al, PNAS. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT2G44745')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT2G44745 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY12_Franco-Zorrilla.png">
+                      <img src="data/table_file/WRKY12_Franco-Zorrilla.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 12.15 </td>
+                  <td> NNGGTCAACNN </td>
+                </tr>
+                <tr>
+                  <td>WRKY14 </td>
+                  <td>Chang et al, Elife. (2013)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT1G30650')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT1G30650 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY14_Chang.png">
+                      <img src="data/table_file/WRKY14_Chang.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 8.18 </td>
+                  <td> NRGTCAACNN </td>
+                </tr>
+                <tr>
+                  <td>WRKY15 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT2G23320')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT2G23320 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY15_Weirauch.png">
+                      <img src="data/table_file/WRKY15_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 7.83 </td>
+                  <td> NRGTCAAMNN </td>
+                </tr>
+                <tr>
+                  <td>WRKY17 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT2G24570')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT2G24570 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY17_Weirauch.png">
+                      <img src="data/table_file/WRKY17_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 6.15 </td>
+                  <td> NNNGTCAANN </td>
+                </tr>
+                <tr>
+                  <td>WRKY2 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT5G56270')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT5G56270 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY2_Weirauch.png">
+                      <img src="data/table_file/WRKY2_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 10.08 </td>
+                  <td> NRGTCAAM </td>
+                </tr>
+                <tr>
+                  <td>WRKY21 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT2G30590')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT2G30590 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY21_Weirauch.png">
+                      <img src="data/table_file/WRKY21_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 7.97 </td>
+                  <td> NNRGTCAACN </td>
+                </tr>
+                <tr>
+                  <td>WRKY22 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT4G01250')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT4G01250 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY22_Weirauch.png">
+                      <img src="data/table_file/WRKY22_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 2.87 </td>
+                  <td> NNNGTCAANN </td>
+                </tr>
+                <tr>
+                  <td>WRKY23 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT2G47260')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT2G47260 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY23_Weirauch.png">
+                      <img src="data/table_file/WRKY23_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 12.82 </td>
+                  <td> RGTCAACG </td>
+                </tr>
+                <tr>
+                  <td>WRKY25 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT2G30250')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT2G30250 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY25_Weirauch.png">
+                      <img src="data/table_file/WRKY25_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 11.04 </td>
+                  <td> YRGTCAAC </td>
+                </tr>
+                <tr>
+                  <td>WRKY27 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT5G52830')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT5G52830 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY27_Weirauch.png">
+                      <img src="data/table_file/WRKY27_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 4.39 </td>
+                  <td> DNGTCAANN </td>
+                </tr>
+                <tr>
+                  <td>WRKY29 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT4G23550')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT4G23550 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY29_Weirauch.png">
+                      <img src="data/table_file/WRKY29_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 4.24 </td>
+                  <td> NNNGTCAANN </td>
+                </tr>
+                <tr>
+                  <td>WRKY30 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT5G24110')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT5G24110 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY30_Weirauch.png">
+                      <img src="data/table_file/WRKY30_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 9.69 </td>
+                  <td> RGTCAACNNN </td>
+                </tr>
+                <tr>
+                  <td>WRKY33 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT2G38470')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT2G38470 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY33_Weirauch.png">
+                      <img src="data/table_file/WRKY33_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 5.47 </td>
+                  <td> NNRGTCAANN </td>
+                </tr>
+                <tr>
+                  <td>WRKY40 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT1G80840')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT1G80840 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY40_Weirauch.png">
+                      <img src="data/table_file/WRKY40_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 6.38 </td>
+                  <td> NRGTCAAN </td>
+                </tr>
+                <tr>
+                  <td>WRKY43 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT2G46130')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT2G46130 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY43_Weirauch.png">
+                      <img src="data/table_file/WRKY43_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 6.69 </td>
+                  <td> NRGTCAANNN </td>
+                </tr>
+                <tr>
+                  <td>WRKY47 </td>
+                  <td>Chang et al, Elife. (2013)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT4G01720')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT4G01720 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY47_Chang.png">
+                      <img src="data/table_file/WRKY47_Chang.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 9.99 </td>
+                  <td> NNRGTCAACGN </td>
+                </tr>
+                <tr>
+                  <td>WRKY48 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT5G49520')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT5G49520 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY48_Weirauch.png">
+                      <img src="data/table_file/WRKY48_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 5.79 </td>
+                  <td> NDNGTCAANN </td>
+                </tr>
+                <tr>
+                  <td>WRKY51 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT5G64810')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT5G64810 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY51_Weirauch.png">
+                      <img src="data/table_file/WRKY51_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 5.56 </td>
+                  <td> NHRGTCAANN </td>
+                </tr>
+                <tr>
+                  <td>WRKY53 </td>
+                  <td>Sullivan et al, Cell Rep. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT4G23810')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT4G23810 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY53_Sullivan.png">
+                      <img src="data/table_file/WRKY53_Sullivan.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 9.27 </td>
+                  <td> RGTCAACNN </td>
+                </tr>
+                <tr>
+                  <td>WRKY57 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT1G69310')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT1G69310 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY57_Weirauch.png">
+                      <img src="data/table_file/WRKY57_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 7.53 </td>
+                  <td> NNRGTCAAMN </td>
+                </tr>
+                <tr>
+                  <td>WRKY60 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT2G25000')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT2G25000 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY60_Weirauch.png">
+                      <img src="data/table_file/WRKY60_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 11.7 </td>
+                  <td> VYGGTCAAMNN </td>
+                </tr>
+                <tr>
+                  <td>WRKY62 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT5G01900')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT5G01900 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY62_Weirauch.png">
+                      <img src="data/table_file/WRKY62_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 12.68 </td>
+                  <td> TRGTCAAM </td>
+                </tr>
+                <tr>
+                  <td>WRKY63 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT1G66600')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT1G66600 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY63_Weirauch.png">
+                      <img src="data/table_file/WRKY63_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 11.15 </td>
+                  <td> NGGTCAAC </td>
+                </tr>
+                <tr>
+                  <td>WRKY75 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT5G13080')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT5G13080 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY75_Weirauch.png">
+                      <img src="data/table_file/WRKY75_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 11.2 </td>
+                  <td> HRGTCAAM </td>
+                </tr>
+                <tr>
+                  <td>WRKY8 </td>
+                  <td>Weirauch et al, cell. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT5G46350')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT5G46350 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY8_Weirauch.png">
+                      <img src="data/table_file/WRKY8_Weirauch.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 7.09 </td>
+                  <td> NRGTCAANN </td>
+                </tr>
+                <tr>
+                  <td>WRKY1 </td>
+                  <td>Lindemose et al, NAR. (2014)</td>
+                  <td>Arabidopsis thaliana</td>
+                  <td>PBM</td>
+                  <td><a onclick="table_ath_search('AT2G04880')"
+                      style="cursor: pointer; color:rgb(113, 175, 241); text-decoration: underline;"> AT2G04880 </a>
+                  </td>
+                  <td>
+                    <a href="data/table_file/WRKY1_Lindemose.png">
+                      <img src="data/table_file/WRKY1_Lindemose.png" alt="Motif logo" style="width: 100px;"
+                        title="Click to zoom" class="lazyload">
+                    </a>
+                  </td>
+                  <td> 9.78 </td>
+                  <td> NRGTCAAN </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <!-- Browse by Species end -->
+        </div>
+    </section>
+  </div>
+
+
+  <script>
+    $(document).ready(function () {
+      $("#search-button").click(function () {
+        var query = $("#search-box").val();
+        $.ajax({
+          url: "browse_1.php",
+          type: "POST",
+          data: {
+            name: query
+          },
+          success: function (data) {
+            $("#result-body").html(data);
+          }
+        });
+      });
+    });
+  </script>
+
+  <section id="tf-section" style="padding: 50px;"></section>
+  <footer data-gjs-highlightable="true" id="imc5ni" data-gjs-type="default" draggable="true"
+    class="bg-navy text-inverse">
+
+    <div class="row justify-content-center">
+
+      <div data-gjs-highlightable="true" id="ixuv3cn" data-gjs-type="default" draggable="true"
+        class="col-md-4 col-lg-3">
+        <div data-gjs-highlightable="true" id="ix9n4ur" data-gjs-type="text" draggable="true" class="widget">
+          <h4 id="iy7kgog" data-gjs-type="text" draggable="true" class="widget-title text-white mb-3">Address</h4>
+          <p id="iug8hjb" data-gjs-type="text" draggable="true"> Fujian Agriculture and Forestry University</p>
+          <p>No.15 Shangxiadian Road, Cangshan District Fuzhou 350028, China</p>
+        </div><!-- /.widget -->
+      </div><!-- /column -->
+
+      <div data-gjs-highlightable="true" id="im0x86i" data-gjs-type="default" draggable="true"
+        class="col-md-12 col-lg-3">
+        <div data-gjs-highlightable="true" id="i81wsti" data-gjs-type="default" draggable="true" class="widget">
+          <h4 data-gjs-highlightable="true" id="ivhyxfq" data-gjs-type="text" draggable="true"
+            class="widget-title text-white mb-3">Email</h4>
+          <p data-gjs-highlightable="true" id="idusp95" data-gjs-type="text" draggable="true" class="mb-5">Contact us by
+            email to: <br><a id="i51y2gi" data-gjs-type="link" draggable="true" href="mailto:jiangdk0722@163.com"
+              class="hover">
+              jiangdk0722@163.com</a> and <a id="i51y2gi" data-gjs-type="link" draggable="true"
+              href="mailto:fjzhu@fafu.edu.cn" class="hover">
+              fjzhu@fafu.edu.cn</a> </p><!-- /.newsletter-wrapper -->
+          <p data-gjs-highlightable="true" id="idusp95" data-gjs-type="text" draggable="true" class="mb-5">TranSysBio
+            Lab: <a data-gjs-type="link" draggable="true" href="http://hbmcsysbio.team/" class="hover">
+              http://hbmcsysbio.team/</a></p><!-- /.newsletter-wrapper -->
+        </div><!-- /.widget -->
+      </div><!-- /column -->
+
+      <div data-gjs-highlightable="true" id="im0x86i" data-gjs-type="default" draggable="true"
+        class="col-md-12 col-lg-3">
+        <div data-gjs-highlightable="true" id="i81wsti" data-gjs-type="default" draggable="true" class="widget">
+
+          <p data-gjs-highlightable="true" id="idusp95" data-gjs-type="text" draggable="true" class="mb-5">
+            <a href="https://beian.miit.gov.cn/" title="Fafu" target="_blank"> 闽ICP备30174900704003793号</a>
+          </p><!-- /.newsletter-wrapper -->
+          <p data-gjs-highlightable="true" id="idusp95" data-gjs-type="text" draggable="true" class="mb-5">
+            <img style=" height: 1em; width: auto;" src="./img/beian.png" alt="">
+            <a href="https://beian.mps.gov.cn/#/query/webSearch?code=35010402351728" rel="noreferrer"
+              target="_blank">闽公网安备35010402351728号</a>
+          </p><!-- /.newsletter-wrapper -->
+        </div><!-- /.widget -->
+      </div><!-- /column -->
+    </div><!--/.row -->
+  </footer>
+</body>
+
+</html>
