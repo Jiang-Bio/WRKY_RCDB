@@ -33,6 +33,6 @@ Code repository:
 
 If you use this resource, please cite:
 
-The Specificity Landscape of AtWRKYs Reveals the Bidirectional Influence of non-CG Methylation
+>The Specificity Landscape of AtWRKYs Reveals the Bidirectional Influence of non-CG Methylation
 
 
