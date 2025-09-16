@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset='utf-8' content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <link rel="apple-touch-icon" href="img/favicon.png" />
+  <link rel="icon" href="img/favicon.png" />
+  <!-- <link href="./css/bootstrap.min.css" rel="stylesheet" /> -->
+  <!-- <link rel="stylesheet" href="./css/fontawesome.css" /> -->
+  <link rel="stylesheet" href="./wrky/css/style.css" />
+  <link rel="stylesheet" href="./css/htmlpage-digimedia-v2.css" />
+  <!-- <link rel="stylesheet" href="./css/animated.css" /> -->
+  <!-- <link rel="stylesheet" href="./css/owl.css" /> -->
+  <!-- <link rel="stylesheet" href="./style.css"> -->
+  <!-- <link rel="stylesheet" href="./wrky/css/yellow.css" /> -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    window.addEventListener('load', function () {
+      // 如果页面加载成功，不做任何操作
+      console.log(" 页面加载成功");
+    });
+
+    window.addEventListener('error', function () {
+      // 如果页面加载失败，5秒后刷新 
+      setTimeout(function () {
+        location.reload();
+      }, 5000);
+    });
+    function searchGene() {
+      var geneID = document.getElementById("gene-id").value;
+
+      if (!geneID) {
+        alert("Please enter a Gene ID. Example AT1G01120");
+        return;
+      }
+
+      // 发送 AJAX 请求到 PHP 脚本
+      $.ajax({
+        url: 'WRCDjbrowse_1.php', // PHP脚本路径
+        type: 'POST',
+        data: {
+          gene_id: geneID
+        },
+        success: function (response) {
+          document.getElementById('result').innerHTML = "Gene Location: " + response;
+          var iframe = document.getElementById('jbrowse-iframe');
+          iframe.src = '/jbrowse/JBrowse-1.16.11/index.html?loc=' + response + '&tracks=GeneAnnot';
+
+        },
+        error: function () {
+          alert("An error occurred while searching.");
+        }
+      });
+    }
+  </script>
+</head>
+<header data-wow-duration="0.75s" data-wow-delay="0s" class="header-area header-sticky wow slideInDown">
+  <div class="container d-flex align-items-center justify-content-between">
+    <div class="logo">
+      <h1><a style="color: white;" href="WRKYRCDB.php">WRKY&nbsp;RCDB</a></h1>
+    </div>
+    <nav class="navbar navbar-expand-lg center-nav transparent navbar-light">
+      <div class="container flex-lg-row flex-nowrap align-items-center">
+        <div class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
+          <div class="offcanvas-body ms-lg-auto d-flex flex-column h-100">
+            <ul class="navbar-nav">
+              <li class="nav-item active"><a href="./WRKYRCDB.php" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">Home</a></li>
+              <li class="nav-item active"><a href="./WRCDsearch.html" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">TFBS</a></li>
+              <li class="nav-item active"><a href="./WRCDbrowse.html" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">Specificity</a></li>
+              <li class="nav-item active"><a href="./WRCDjbrowse.html" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">Jbrowse</a></li>
+              <li class="nav-item dropdown"><a href="" data-bs-toggle="dropdown" class="active nav-link dropdown-toggle"
+                  style="color: rgb(255, 255, 255);">Tools</a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a href="./wrky/WRCDtools1.html" class="dropdown-item">TF-DNA Interaction
+                      Network</a></li>
+                  <li class="nav-item"><a href="./wrky/WRCDtools2.php" class="dropdown-item">GO Enrichment</a></li>
+                  <!-- <li class="nav-item"><a href="./wrky/WRCDtools3.php" class="dropdown-item">SELEX PCA</a></li> -->
+                  <!-- <li class="nav-item"><a href="./wrky/WRCDmotifmatch.php" class="dropdown-item">Motif Match</a></li> -->
+                  <li class="nav-item"><a href="./WRCDindex.html" class="dropdown-item">Gene Search</a></li>
+                </ul>
+              </li>
+              <li class="nav-item active"><a href="./WRCDdownload.html" class="active nav-link"
+                  style="color: rgb(255, 255, 255);">Download</a></li>
+              <!-- <li class="nav-item active"><a href="./WRCDcontact.php" class="active nav-link">Contact</a></li> -->
+            </ul><!-- /.navbar-nav -->
+          </div><!-- /.offcanvas-body -->
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+  </div>
+</header>
+
+<body>
+  <div>
+
+
+
+    <!-- ***** JBrowse 2 Section Start ***** -->
+    <section id="jbrowse-section" style="padding: 100px 0;">
+
+      <div class="container">
+        <h3 style="text-align: center;"><strong style="color: #fe664e;">JBrowse</strong></h3>
+        <h7 style=" color: rgba(0, 0, 0, 0.71); text-align: justify;">This page displays the genome-wide occupancy
+          tracks of AtWRKYs,
+          including data types of <strong style="color: #fe664e;">DAP, ampDAP, methyl-ampDAP, ChIP, and WGBS</strong>.
+          Tracks named by tissues are DAP-seq libraries. DAP-seq-based libraries have
+          two types of controls: "input" is the gDNA library before affinity purification, and the "TF-free" library
+          captures the non-specific binding of Magne HaloTag Beads (affinity purification without TF expression).
+        </h7>
+      </div>
+
+      <div class="row" style="background: linear-gradient(135deg, rgb(227, 227, 227), rgb(227, 227, 227));
+        padding: 40px 20px;border-radius: 8px;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);margin: 10px auto;width: 90%;">
+        <div class="container">
+          <label for="gene-id" style="color: black;">Enter Gene ID:</label>
+          <input type="text" id="gene-id" placeholder="Enter Gene ID" value="AT1G31650">
+          <button onclick="searchGene()" action="search_process.php" method="post">Search</button>
+          <label id="result"></label>
+        </div>
+
+        <div id="jbrowse-container" style="width: 100%; height: 3000px; border: 1px solid #ddd;">
+          <iframe id="jbrowse-iframe"
+            src="/jbrowse/JBrowse-1.16.11/index.html?loc=Chr1:25036833..25049659&tracks=GeneAnnot" width="100%"
+            height="3000px" style="border: none;"></iframe>
+        </div>
+      </div>
+    </section>
+    <!-- ***** JBrowse 2 Section End ***** -->
+
+  </div>
+
+</body>
+<footer data-gjs-highlightable="true" id="imc5ni" data-gjs-type="default" draggable="true" class="bg-navy text-inverse">
+
+  <div class="row justify-content-center">
+
+    <div data-gjs-highlightable="true" id="ixuv3cn" data-gjs-type="default" draggable="true" class="col-md-4 col-lg-3">
+      <div data-gjs-highlightable="true" id="ix9n4ur" data-gjs-type="text" draggable="true" class="widget">
+        <h4 id="iy7kgog" data-gjs-type="text" draggable="true" class="widget-title text-white mb-3">Address</h4>
+        <p id="iug8hjb" data-gjs-type="text" draggable="true"> Fujian Agriculture and Forestry University</p>
+        <p>No.15 Shangxiadian Road, Cangshan District Fuzhou 350028, China</p>
+      </div><!-- /.widget -->
+    </div><!-- /column -->
+
+    <div data-gjs-highlightable="true" id="im0x86i" data-gjs-type="default" draggable="true" class="col-md-12 col-lg-3">
+      <div data-gjs-highlightable="true" id="i81wsti" data-gjs-type="default" draggable="true" class="widget">
+        <h4 data-gjs-highlightable="true" id="ivhyxfq" data-gjs-type="text" draggable="true" class="widget-title text-white mb-3">Email</h4>
+        <p data-gjs-highlightable="true" id="idusp95" data-gjs-type="text" draggable="true" class="mb-5">Contact us by email to: <br><a id="i51y2gi" data-gjs-type="link" draggable="true" href="mailto:jiangdk0722@163.com" class="hover">
+            jiangdk0722@163.com</a> and <a id="i51y2gi" data-gjs-type="link" draggable="true" href="mailto:fjzhu@fafu.edu.cn" class="hover">
+            fjzhu@fafu.edu.cn</a> </p><!-- /.newsletter-wrapper -->
+        <p data-gjs-highlightable="true" id="idusp95" data-gjs-type="text" draggable="true" class="mb-5">TranSysBio Lab: <a data-gjs-type="link" draggable="true" href="http://hbmcsysbio.team/" class="hover">
+            http://hbmcsysbio.team/</a></p><!-- /.newsletter-wrapper -->
+      </div><!-- /.widget -->
+    </div><!-- /column -->
+
+    <div data-gjs-highlightable="true" id="im0x86i" data-gjs-type="default" draggable="true" class="col-md-12 col-lg-3">
+      <div data-gjs-highlightable="true" id="i81wsti" data-gjs-type="default" draggable="true" class="widget">
+
+        <p data-gjs-highlightable="true" id="idusp95" data-gjs-type="text" draggable="true" class="mb-5">
+        <a href="https://beian.miit.gov.cn/" title="Fafu" target="_blank"> 闽ICP备30174900704003793号</a>
+          </p><!-- /.newsletter-wrapper -->
+        <p data-gjs-highlightable="true" id="idusp95" data-gjs-type="text" draggable="true" class="mb-5">
+        <img style=" height: 1em; width: auto;" src="./img/beian.png" alt="">
+        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=35010402351728" rel="noreferrer" target="_blank">闽公网安备35010402351728号</a>
+        </p><!-- /.newsletter-wrapper -->
+      </div><!-- /.widget -->
+    </div><!-- /column -->
+  </div><!--/.row -->
+</footer>
+
+</html>
