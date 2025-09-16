@@ -2,7 +2,7 @@
 ![image](https://github.com/Jiang-Bio/WRKY_RCDB/blob/master/graphical_abstract.png)
 📖 Overview
 
-A distinct epigenetic hallmark of plants is the presence of DNA methylation in non-CG contexts. While the physiological roles of non-CG methylation are well established, its direct impact on transcription factor (TF)–DNA interactions remains largely unexplored.
+#A distinct epigenetic hallmark of plants is the presence of DNA methylation in non-CG contexts. While the physiological roles of non-CG methylation are well established, its direct impact on transcription factor (TF)–DNA interactions remains largely unexplored.
 
 In this study, we focused on the WRKY transcription factor family and systematically investigated how non-CG methylation influences their DNA-binding specificity and genome-wide cis-regulatory elements (CREs).
 
