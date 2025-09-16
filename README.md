@@ -3,7 +3,7 @@
 ![image](https://github.com/Jiang-Bio/WRKY_RCDB/blob/master/graphical_abstract.png)
 
 ---
-📖 Overview
+📖 **Overview**
 
 - A distinct epigenetic hallmark of plants is the presence of DNA methylation in non-CG contexts. While the physiological roles of non-CG methylation are well established, its direct impact on transcription factor (TF)–DNA interactions remains largely unexplored.
 
@@ -11,13 +11,13 @@
 
 ---
 
-🔬 Key Findings
+🔬 **Key Findings**
 
-- High-throughput profiling: Generated 461 SELEX and DAP-seq libraries for 54 Arabidopsis thaliana WRKYs.
+- High-throughput profiling: Generated **461** SELEX and DAP-seq libraries for **54** Arabidopsis thaliana WRKYs.
 
 - Specificity divergence: DNA methylation reshapes both monomeric and dimeric binding specificities, leading to greater divergence among WRKY family members.
 
-- Novel motifs: Curated 201 WRKY motifs, clustered into 11 classes, including 5 previously unreported specificities.
+- Novel motifs: Curated **201** WRKY motifs, clustered into 11 classes, including 5 previously unreported specificities.
 
 - Methylation-dependent recognition: The canonical WRKY cis-element PRE4 is recognized only when methylated.
 
@@ -27,10 +27,10 @@
 
 ---
 
-📊 Resources
+📊 **Resources**
 
 WRKY Regulatory Code Database (WRKYRCDB):
-- Access curated motifs, binding data, and analyses at 👉 https://transysbio.cn/WRKYRCDB.php
+- Access curated motifs, binding data, and analyses at 👉 **https://transysbio.cn/WRKYRCDB.php**
   
 ![image](https://github.com/Jiang-Bio/WRKY_RCDB/blob/master/WRKYRCDB.png)
 
@@ -41,7 +41,7 @@ Code repository:
 
 ---
 
-📌 Citation
+📌 **Citation**
 
 If you use this resource, please cite:
 
