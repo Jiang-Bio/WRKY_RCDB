@@ -59,4 +59,4 @@ Code repository:
 
 If you use this resource, please cite:
 
-*Nana Ma,†, Dingkun Jian,†, Tian Li,†, Lin Luo,†, et.al. The Specificity Landscape of AtWRKYs Reveals the Bidirectional Influence of non-CG Methylation.*
+*Nana Ma,†, Dingkun Jian,†, Tian Li,†, Lin Luo,†, et.al. The Specificity Landscape of AtWRKYs Reveals the Bidirectional Influence of non-CG Methylation. Nucleic Acids Research* 
