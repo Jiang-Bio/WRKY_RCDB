@@ -59,5 +59,4 @@ Code repository:
 
 If you use this resource, please cite:
 
-*Nana Ma,†, Dingkun Jian,†, Tian Li,†, Lin Luo,†, et.al. The Specificity Landscape of AtWRKYs Reveals the Bidirectional Influence of non-CG Methylation. Nucleic Acids Research* 
 *Ma, N.,†, Jiang, D.,†, Li, T.,†, Luo, L.,†, Chen, H., Zhang, X., Mu, Z., Chen, S., Chen, P., Liu, Q., Lin, J., Wang, Q., Yin, Y., Taipale, J., Huang, J., Guo, H., & Zhu, F. (2025). The specificity landscape of WRKY transcription factors reveals the bidirectional influence of non-CG methylation. Nucleic acids research, 53(21), gkaf1168. https://doi.org/10.1093/nar/gkaf1168*
